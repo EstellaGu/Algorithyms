@@ -1,3 +1,5 @@
+package queues;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -22,7 +24,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    private class DequeIterator<Item> implements Iterator<Item>{
+    private class DequeIterator<Item> implements Iterator<Item> {
         private Node curr = first;
 
         @Override
@@ -120,7 +122,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         Item val = first.val;
         first = first.next;
-        first.prev = null;
+        if (first != null){
+            first.prev = null;
+        }
 
         size--;
 
@@ -139,7 +143,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         Item val = last.val;
         last = last.prev;
-        last.next = null;
+        if (last != null) {
+            last.next = null;
+        }
 
         size--;
 
@@ -152,7 +158,7 @@ public class Deque<Item> implements Iterable<Item> {
 
 
     public static void main(String[] args) {
-//        Deque<Integer> deque = new Deque<>();
+        Deque<Integer> deque = new Deque<>();
 //
 //        deque.addFirst(1);
 //        deque.addFirst(2);
@@ -176,5 +182,8 @@ public class Deque<Item> implements Iterable<Item> {
 //        while (it.hasNext()) {   //  4, 3, 2, 1, 6, 7, 8
 //            System.out.println(it.next());
 //        }
+
+        deque.addFirst(1);
+        deque.removeFirst();
     }
 }

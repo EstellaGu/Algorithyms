@@ -1,10 +1,11 @@
+package queues;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdRandom;
 
-public class RandomizedQueue <Item> implements Iterable<Item>{
+public class RandomizedQueue <Item> implements Iterable<Item> {
     private Item[] arr;
     private int size;
     private int nextEmpty;
@@ -160,48 +161,48 @@ public class RandomizedQueue <Item> implements Iterable<Item>{
     }
 
     // return an independent iterator over items in random order
-    public RandomizedIterator<Item> iterator() {
+    public Iterator<Item> iterator() {
         return new RandomizedIterator<>();
     }
 
 
     public static void main(String[] args) {
-        RandomizedQueue<Integer> queue = new RandomizedQueue<>();
-
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        queue.enqueue(4);
-        queue.enqueue(5);
-        queue.enqueue(6);
-        queue.enqueue(7);
-
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.sample());
-        System.out.println(queue.size());  // 5
-        System.out.println(queue.isEmpty());  // false
-
-        Iterator<Integer> it1 = queue.iterator();
-        Iterator<Integer> it2 = queue.iterator();
-
-        System.out.println("it1------------");
-        while (it1.hasNext()) {
-            System.out.println(it1.next());
-        }
-
-        System.out.println("it2------------");
-        while (it2.hasNext()) {
-            System.out.println(it2.next());
-        }
-
-        queue.enqueue(8);
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        System.out.println(queue.isEmpty());  // true
+//        RandomizedQueue<Integer> queue = new RandomizedQueue<>();
+//
+//        queue.enqueue(1);
+//        queue.enqueue(2);
+//        queue.enqueue(3);
+//        queue.enqueue(4);
+//        queue.enqueue(5);
+//        queue.enqueue(6);
+//        queue.enqueue(7);
+//
+//        System.out.println(queue.dequeue());
+//        System.out.println(queue.dequeue());
+//        System.out.println(queue.sample());
+//        System.out.println(queue.size());  // 5
+//        System.out.println(queue.isEmpty());  // false
+//
+//        Iterator<Integer> it1 = queue.iterator();
+//        Iterator<Integer> it2 = queue.iterator();
+//
+//        System.out.println("it1------------");
+//        while (it1.hasNext()) {
+//            System.out.println(it1.next());
+//        }
+//
+//        System.out.println("it2------------");
+//        while (it2.hasNext()) {
+//            System.out.println(it2.next());
+//        }
+//
+//        queue.enqueue(8);
+//        queue.dequeue();
+//        queue.dequeue();
+//        queue.dequeue();
+//        queue.dequeue();
+//        queue.dequeue();
+//        queue.dequeue();
+//        System.out.println(queue.isEmpty());  // true
     }
 }
