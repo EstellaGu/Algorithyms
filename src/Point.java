@@ -1,3 +1,13 @@
+/******************************************************************************
+ *  Compilation:  javac Point.java
+ *  Execution:    java Point
+ *  Dependencies: none
+ *
+ *  An immutable data type for points in the plane.
+ *  For use on Coursera, Algorithms Part I programming assignment.
+ *
+ ******************************************************************************/
+
 import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
 
@@ -33,7 +43,7 @@ public class Point implements Comparable<Point> {
 
     private int getY(String s) {
         int comma = s.indexOf(",");
-        return Integer.parseInt(s.substring(comma + 1, s.length()));
+        return Integer.parseInt(s.substring(comma + 2, s.length() - 1));
     }
 
     private boolean isEqual(Point p) {
@@ -78,7 +88,7 @@ public class Point implements Comparable<Point> {
             return Double.POSITIVE_INFINITY;
         }
 
-        return (y1 - this.y) / (x1 - this.x);
+        return ((double)(y1 - this.y)) / (x1 - this.x);
     }
 
     /**
@@ -104,7 +114,7 @@ public class Point implements Comparable<Point> {
         if (this.y < y1 || (this.y == y1 && this.x < x1)) {
             return -1;
         } else {
-            return 1;
+            return +1;
         }
     }
 
@@ -124,7 +134,7 @@ public class Point implements Comparable<Point> {
                 if (slope1 < slope2) {
                     return -1;
                 } else if (slope1 > slope2) {
-                    return 1;
+                    return +1;
                 } else {
                     return 0;
                 }
@@ -149,6 +159,6 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        /* YOUR CODE HERE */
+
     }
 }
