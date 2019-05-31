@@ -1,3 +1,5 @@
+package collinearPoints;
+
 /*************************************************************************
  *  Compilation:  javac LineSegment.java
  *  Execution:    none

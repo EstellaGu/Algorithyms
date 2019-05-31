@@ -1,9 +1,9 @@
+package collinearPoints;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.ResizingArrayQueue;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class FastCollinearPoints {
     private ResizingArrayQueue<LineSegment> segs;

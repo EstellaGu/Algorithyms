@@ -1,4 +1,4 @@
-/******************************************************************************
+package collinearPoints; /******************************************************************************
  *  Compilation:  javac Point.java
  *  Execution:    java Point
  *  Dependencies: none
@@ -36,18 +36,8 @@ public class Point implements Comparable<Point> {
         StdDraw.point(x, y);
     }
 
-    private int getX(String s) {
-        int comma = s.indexOf(",");
-        return Integer.parseInt(s.substring(1, comma));
-    }
-
-    private int getY(String s) {
-        int comma = s.indexOf(",");
-        return Integer.parseInt(s.substring(comma + 2, s.length() - 1));
-    }
-
     private boolean isEqual(Point p) {
-        return this.x == getX(p.toString()) && this.y == getY(p.toString());
+        return this.x == p.x && this.y == p.y;
     }
 
     /**
@@ -77,18 +67,15 @@ public class Point implements Comparable<Point> {
             return Double.NEGATIVE_INFINITY;
         }
 
-        int x1 = getX(that.toString());
-        int y1 = getY(that.toString());
-
-        if (this.y == y1) {
+        if (this.y == that.y) {
             return +0.0;
         }
 
-        if (this.x == x1) {
+        if (this.x == that.x) {
             return Double.POSITIVE_INFINITY;
         }
 
-        return ((double)(y1 - this.y)) / (x1 - this.x);
+        return ((double)(that.y - this.y)) / (that.x - this.x);
     }
 
     /**
@@ -108,10 +95,7 @@ public class Point implements Comparable<Point> {
             return 0;
         }
 
-        int x1 = getX(that.toString());
-        int y1 = getY(that.toString());
-
-        if (this.y < y1 || (this.y == y1 && this.x < x1)) {
+        if (this.y < that.y || (this.y == that.y && this.x < that.x)) {
             return -1;
         } else {
             return +1;

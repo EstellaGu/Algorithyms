@@ -1,3 +1,4 @@
+package collinearPoints;
 
 import java.util.Iterator;
 import edu.princeton.cs.algs4.ResizingArrayQueue;

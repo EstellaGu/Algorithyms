@@ -1,5 +1,7 @@
 
-import edu.princeton.cs.algs4.StdStats;
+import collinearPoints.FastCollinearPoints;
+import collinearPoints.LineSegment;
+import collinearPoints.Point;
 
 public class Test {
     public static void main(String[] args) {
