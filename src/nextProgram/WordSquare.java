@@ -1,6 +1,5 @@
 package nextProgram;
 
-import dataStructure.Trie;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -31,39 +30,16 @@ public class WordSquare {
     }
 
     private String[] fillAsSquare(String[] words) {
-        Trie trie = new Trie(words);
-        int k = words[0].length();
-
-        if (words.length < k) {
-            throw new IllegalArgumentException();
-        }
-
-        for (int i = 0; i < k; i++) {
-
-        }
-
         return null;
     }
 
     public String[][] findWordSquares(String[] words) {
-        Arrays.sort(words, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.length() - o2.length();
-            }
-        });
-
-        for (int i = 0; i < words.length; i++) {
-
-        }
-
         return null;
     }
 
     public static void main(String[] args) {
         WordSquare ws = new WordSquare();
         String[] test = {"BALL", "AREA", "LEAD", "LADY"};
-        Trie t = new Trie(test);
-        t.printTree();
+
     }
 }

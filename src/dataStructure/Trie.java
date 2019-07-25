@@ -3,124 +3,68 @@ package dataStructure;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * 这个字典树只接受字符串数量和每个单词的字符数一样的字符串数组
- */
-public class Trie {
+
+class Trie {
     private TrieNode root;
 
-    public Trie(String[] words) {
-        int k = words.length;
-
-        char[][] letters = new char[k][k];
-        for (int i = 0; i < k; i++) {
-            if (words[i].length() != k) {
-                throw new IllegalArgumentException();
-            }
-
-            letters[i] = words[i].toCharArray();
-        }
-
-        root = new TrieNode('0', false);
-        TrieNode[] pointers = new TrieNode[k];
-        for (int j = 0; j < k; j++) {
-            root.setChild(letters[j][0], k == 1);
-            pointers[j] = root.getChild(letters[j][0]);
-        }
-
-        for (int i = 1; i < k; i ++) {    // 第i个字母
-            for (int j = 0; j < k; j++) {  // 第j个单词
-                // 把第j个单词的第i个字母加入树
-                pointers[j].setChild(letters[j][i], i == k - 1);
-                pointers[j] = pointers[j].getChild(letters[j][i]);
-            }
-        }
-
-        pointers = null;
-    }
-
-    private class TrieNode {
+    private class TrieNode{
         private char val;
         private TrieNode[] children;
-        private boolean isNode;
-        private int childrenCount;
+        private boolean isWord;
 
-        public TrieNode(char c, boolean node) {
+        public TrieNode (char c) {
             val = c;
             children = new TrieNode[26];
-            isNode = node;
-            childrenCount = 0;
-        }
 
-        public void setChild(char child, boolean node) {
-            int index = child - 65;
-            if (children[index] == null) {
-                children[index] = new TrieNode(child, node);
-                childrenCount++;
-            }
-        }
-
-        public TrieNode getChild(char child) {
-            return children[child - 65];
-        }
-
-        public String toString() {
-            return val + "";
-        }
-
-        public TrieNode[] getChildren() {
-            if (childrenCount == 0) {
-                return null;
-            }
-
-            TrieNode[] c = new TrieNode[childrenCount];
-            int cptr = 0;
             for (int i = 0; i < 26; i++) {
-                if (children[i] != null) {
-                    c[cptr] = children[i];
-                    cptr++;
-                }
+                children[i] = null;
             }
-
-            return c;
         }
 
-        public void printWholeTree() {
-            System.out.println(val);
+        public void addChild (char c) {
+            children[c - 'a'] = new TrieNode(c);
+        }
 
-            ArrayList<TrieNode> childs = new ArrayList<>();
-            for (int i = 0; i < 26; i++) {
-                if (children[i] != null) {
-                    childs.add(children[i]);
-                }
-            }
-
-            while (!childs.isEmpty()) {
-                ArrayList<TrieNode> tmp = new ArrayList<>();
-
-                for (TrieNode t: childs) {
-                    System.out.print(t + " ");
-
-                    TrieNode[] c = t.getChildren();
-
-                    if (c != null) {
-                        Collections.addAll(tmp, c);
-                    }
-                }
-
-                System.out.println();
-                childs = tmp;
-            }
-            System.out.println();
+        public TrieNode getChild (char c) {
+            return children[c - 'a'];
         }
 
     }
 
-    public void printTree() {
-        root.printWholeTree();
+    /** Initialize your data structure here. */
+    public Trie() {
+        root = new TrieNode('0');
     }
 
-    public static void main(String[] args) {
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        TrieNode ptr = root;
 
+        for (int i = 0; i < word.length(); i++) {
+            char curr = word.charAt(i);
+            if (ptr.getChild(curr) == null) {
+                ptr.addChild(curr);
+            }
+
+            ptr = ptr.getChild(curr);
+
+            if (i == word.length() - 1) {
+                ptr.isWord = true;
+            }
+        }
+    }
+
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        for (int i = 0; i < word.length(); i++) {
+
+        }
+
+        return false;
+    }
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        return false;
     }
 }
