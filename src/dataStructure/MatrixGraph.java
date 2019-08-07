@@ -2,6 +2,7 @@ package dataStructure;
 
 import util.Print;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -9,17 +10,17 @@ import java.util.Stack;
 /**
  * 目前只是无向无权图
  */
-public class Graph {
+public class MatrixGraph {
     private int[][] graph;   // 没有边的地方用0表示
     private int N;    // N代表节点数
     private boolean weighted;
     private boolean bidirectional;
 
-    public Graph(int[][] g, boolean weight, boolean bi) {
+    public MatrixGraph(int[][] g, boolean weight, boolean directed) {
         graph = g;
         N = g.length;
         weighted = weight;
-        bidirectional = bi;
+        bidirectional = directed;
     }
 
     public void addEdge(int vStart, int vEnd, int w) {
@@ -38,70 +39,63 @@ public class Graph {
         graph[vStart][vEnd] = 0;
     }
 
-    public int[] DFS(int start) {
+    public int[] stackDFS(int start) {
         boolean[] visited  = new boolean[N];
         int[] result = new int[N];
         Stack<Integer> stack = new Stack<>();
-
-        visited[start] = true;
-        result[0] = start;
         stack.push(start);
-        int count = 1;
+
+        int count = 0;
         while (!stack.isEmpty()) {
-            int curr = stack.peek();
-            boolean hasUnvisitedNeighbour = false;
-            for (int i = 0; i < N; i++) {
-                if (graph[curr][i] != 0 && !visited[i]) {
-                    visited[i] = true;
-                    stack.push(i);
-                    result[count] = i;
-                    count++;
-                    hasUnvisitedNeighbour = true;
-                    break;
-                }
+            int curr = stack.pop();
+
+            if (!visited[curr]) {
+                visited[curr] = true;
+                result[count] = curr;
+                count++;
             }
 
-            if (!hasUnvisitedNeighbour) curr = stack.pop();
+            for (int i = 0; i < N; i++) {
+                if (graph[curr][i] != 0 && !visited[i]) {
+                    stack.push(i);
+                }
+            }
         }
 
         return result;
     }
 
-    // 这个还有问题
-    private int[] DFSHelper(int start, int[] result, int count, boolean[] visited) {
-        visited[start] = true;
-        result[count] = start;
-        boolean hasUnvisitedNeighbour = false;
+    public void recursionDFS(int start) {
+        boolean[] visited = new boolean[N];
+        recursionDFSUtil(start, visited);
+    }
+
+    private void recursionDFSUtil(int v, boolean[] visited) {
+        visited[v] = true;
+        System.out.print(v + " ");
+
         for (int i = 0; i < N; i++) {
-            if (graph[start][i] != 0 && !visited[i]) {
-                hasUnvisitedNeighbour = true;
-                DFSHelper(i, result, count + 1, visited);
+            if (graph[v][i] != 0 && !visited[i]) {
+                recursionDFSUtil(i, visited);
             }
         }
-
-        if (!hasUnvisitedNeighbour) {
-            return result;
-        }
-
-        return result;
     }
 
     public int[] BFS(int start) {
         int[] result = new int[N];
         boolean[] visited = new boolean[N];
         Queue<Integer> queue = new LinkedList<>();
-        int count = 1;
-
         queue.add(start);
         visited[start] = true;
         result[0] = start;
+        int count = 1;
         while (!queue.isEmpty()) {
             int curr = queue.poll();
 
             for (int i = 0; i < N; i++) {
                 if (graph[curr][i] != 0 && !visited[i]) {
-                    visited[i] = true;
                     queue.add(i);
+                    visited[i] = true;
                     result[count] = i;
                     count++;
                 }
@@ -257,25 +251,15 @@ public class Graph {
 
     public static void main(String[] args) {
         int[][] g = {
-                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                {0, 0, 1, 1, 0},
+                {1, 0, 0, 0, 1},
+                {0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}
         };
 
-        Graph graph = new Graph(g, false, false);
-        int[] result = graph.topology();
+        MatrixGraph graph = new MatrixGraph(g, false, true);
+        int[] result = graph.stackDFS(0);
         Print.print1DArray(result);
     }
 }

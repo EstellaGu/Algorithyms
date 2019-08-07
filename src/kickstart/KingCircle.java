@@ -1,4 +1,4 @@
-package nextProgram;
+package kickstart;
 
 import java.util.Scanner;
 

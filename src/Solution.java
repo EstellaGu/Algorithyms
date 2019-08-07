@@ -1,67 +1,33 @@
-
+import edu.princeton.cs.algs4.In;
+import util.ConstructUtil;
+import util.Print;
+import util.TreeNode;
 
 import java.util.*;
 
-import util.Print;
 
-public class Solution {
-    private HashMap<String, ArrayList<Time>> map;
-
-    private class Time{
-        String key;
-        String value;
-        int timestamp;
-
-        public Time(String k, String v, int t) {
-            key = k;
-            value = v;
-            timestamp = t;
-        }
-
-        public int compareTo(Time t) {
-            return this.timestamp - t.timestamp;
-        }
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> seq = new ArrayList<>();
+        inordered(root, seq, k);
+        return seq.get(k - 1);
     }
 
-    /** Initialize your data structure here. */
-    public Solution() {
-        map = new HashMap<>();
+    private void inordered(TreeNode root, List<Integer> result, int k) {
+        if (root == null) return;
+
+        inordered(root.left, result, k);
+        result.add(root.val);
+        if (result.size() == k) {
+            return;
+        }
+        inordered(root.right, result, k);
     }
 
-    public void set(String key, String value, int timestamp) {
-        ArrayList<Time> list;
-        if (map.containsKey(key)) {
-            list = map.get(key);
-        } else {
-            list = new ArrayList<>();
-        }
-
-        list.add(new Time(key, value, timestamp));
-        map.put(key, list);
-    }
-
-    public String get(String key, int timestamp) {
-        ArrayList<Time> list = map.get(key);
-        Time t = new Time(key, "", timestamp);
-        return binarySearch(list, 0, list.size() - 1, t);
-    }
-
-    private String binarySearch(ArrayList<Time> list, int low, int high, Time target) {
-        if (low > high) return null;
-
-        if (low == high && list.get(low).compareTo(target) <= 0){
-            return list.get(low).value;
-        } else if (low == high){
-            return null;
-        }
-
-        int mid = (low + high) / 2;
-        if (list.get(mid).compareTo(target) <= 0 && list.get(mid + 1).compareTo(target) > 0) {
-            return list.get(mid).value;
-        } else if (list.get(mid).compareTo(target) <= 0 && list.get(mid + 1).compareTo(target) <= 0){
-            return binarySearch(list, mid + 1, high, target);
-        } else{
-            return binarySearch(list, low, mid - 1, target);
-        }
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        String[] nodes = {"3", "1", "4", null, "2"};
+        TreeNode root = ConstructUtil.constructTree(nodes);
+        System.out.println(s.kthSmallest(root, 3));
     }
 }
